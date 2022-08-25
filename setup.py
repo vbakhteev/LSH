@@ -28,7 +28,7 @@ extensions = [Extension("lsh.cMinhash",
 if USE_CYTHON:
     from Cython.Build import cythonize
 
-    extensions = cythonize(extensions)
+    extensions = cythonize(extensions, force=True)
 
 install_deps = ['numpy', 'cython>=0.24.1']
 test_deps = ['coverage>=4.0.3', 'pytest>=3.0', ]
