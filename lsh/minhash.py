@@ -6,7 +6,7 @@ except ImportError:
 
 import numpy as np
 
-from .cMinhash import minhash_32, minhash_64, shingles, jaccard
+from .cMinhash import minhash_32, minhash_64
 
 
 class MinHasher(object):
