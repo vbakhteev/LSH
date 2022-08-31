@@ -28,10 +28,6 @@ extensions = [
         ["lsh/cMinhash{}".format(ext), 'lsh/MurmurHash3.cpp'],
         include_dirs=includes
     ),
-    Extension(
-        "lsh.utils",
-        ["lsh/utils.pyx"],
-    ),
 ]
 if USE_CYTHON:
     from Cython.Build import cythonize
