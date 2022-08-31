@@ -29,7 +29,8 @@ extensions = [
         include_dirs=includes
     ),
     Extension(
-        "lsh.utils.pyx",
+        "lsh.utils",
+        ["lsh.utils.pyx"],
     ),
 ]
 if USE_CYTHON:
