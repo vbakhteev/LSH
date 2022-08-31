@@ -30,7 +30,7 @@ extensions = [
     ),
     Extension(
         "lsh.utils",
-        ["lsh.utils.pyx"],
+        ["lsh/utils.pyx"],
     ),
 ]
 if USE_CYTHON:
