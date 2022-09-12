@@ -55,6 +55,23 @@ class Cache(object):
             # todo faster hash here? or no hash at all?
             bucket_id = hash(tuple(bucket))
             self.bins[bin_i][bucket_id].add(doc_id)
+    
+    def add_fingerprint_online(self, fingerprint, doc_id) -> list:
+        self.fingerprints[doc_id] = fingerprint
+        candidates = set()
+
+        for bin_i, bucket in self.bins_(fingerprint):
+            bucket_id = hash(tuple(bucket))
+            bucket = self.bins[bin_i][bucket_id]
+            bucket.add(doc_id)
+
+            if len(bucket) > 1:
+                candidates.update(bucket)
+
+        if doc_id in candidates:
+            candidates.remove(doc_id)
+
+        return list(candidates)
 
     def filter_candidates(self, candidate_id_pairs, min_jaccard):
         logging.info('Computing Jaccard sim of %d pairs',
