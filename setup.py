@@ -15,7 +15,6 @@ DOWNLOAD_URL = 'https://github.com/mattilyra/lsh'
 
 VERSION = '0.3.0'
 
-ext = '.pyx' if USE_CYTHON else '.cpp'
 try:
     import numpy as np
     includes = [np.get_include()]
@@ -25,9 +24,14 @@ except ImportError:
 extensions = [
     Extension(
         "lsh.cMinhash",
-        ["lsh/cMinhash{}".format(ext), 'lsh/MurmurHash3.cpp'],
+        ["lsh/cMinhash.pyx", 'lsh/MurmurHash3.cpp'],
         include_dirs=includes
     ),
+    Extension(
+        "lsh.utils",
+        ["lsh/utils.pyx"],
+        include_dirs=includes
+    )
 ]
 if USE_CYTHON:
     from Cython.Build import cythonize
