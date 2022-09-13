@@ -1,9 +1,24 @@
 #! /usr/bin/env python
 from __future__ import print_function
 
+import pip
 from setuptools import setup, Extension
 
-USE_CYTHON = True
+
+def install(package):
+    if hasattr(pip, 'main'):
+        pip.main(['install', package])
+    else:
+        pip._internal.main(['install', package])
+
+
+install("cython==0.29.32")
+install("numpy==1.23.3")
+
+
+import numpy as np
+from Cython.Build import cythonize
+
 
 DISTNAME = 'lsh'
 DESCRIPTION = 'A library for performing shingling and LSH for python.'
@@ -15,12 +30,7 @@ DOWNLOAD_URL = 'https://github.com/mattilyra/lsh'
 
 VERSION = '0.3.0'
 
-try:
-    import numpy as np
-    includes = [np.get_include()]
-except ImportError:
-    includes = []
-
+includes = [np.get_include()]
 extensions = [
     Extension(
         "lsh.cMinhash",
@@ -33,10 +43,7 @@ extensions = [
         include_dirs=includes
     )
 ]
-if USE_CYTHON:
-    from Cython.Build import cythonize
-
-    extensions = cythonize(extensions, force=True)
+extensions = cythonize(extensions, force=True)
 
 install_deps = ['numpy', 'cython>=0.24.1']
 test_deps = ['coverage>=4.0.3', 'pytest>=3.0', ]
